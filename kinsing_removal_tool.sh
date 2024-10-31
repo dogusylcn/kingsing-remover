@@ -4,10 +4,24 @@ echo "Starting the Kinsing Malware Removal Tool..."
 
 # 1. Kill malicious processes related to kdevtmpfsi and kinsing
 kill_malicious_processes() {
-    echo "Stopping any active malware processes..."
-    pkill -f kdevtmpfsi
-    pkill -f kinsing
-    echo "Malware processes stopped."
+    echo "Listing any active malware processes related to 'kdevtmpfsi' or 'kinsing'..."
+
+    # List processes related to kdevtmpfsi and kinsing, excluding the grep command itself
+    malware_processes=$(ps aux | grep -E 'kdevtmpfsi|kinsing' | grep -v 'grep')
+
+    if [ -z "$malware_processes" ]; then
+        echo "No active malware processes found."
+    else
+        echo "Found the following malware processes:"
+        echo "$malware_processes"
+
+        # Extract PIDs and kill each specific process
+        echo "Stopping these malware processes..."
+        pids=$(echo "$malware_processes" | awk '{print $2}')
+        for pid in $pids; do
+            kill -9 "$pid" && echo "Stopped process with PID $pid."
+        done
+    fi
 }
 
 # 2. Remove any malicious cron jobs containing 'unk.sh'

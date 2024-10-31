@@ -31,3 +31,10 @@ The script creates dummy files (`/tmp/kdevtmpfsi` and `/tmp/kinsing`) with restr
 2. **Make the Script Executable**:
    ```bash
    chmod +x kinsing_removal_tool.sh
+
+3. **Make the Script Executable**:
+   ```bash
+   sudo ./kinsing_removal_tool.sh
+
+## Disclaimer
+This tool modifies system files to remove malware. Use it with caution and ensure you have backups of important data before running it. Use at your own risk.
